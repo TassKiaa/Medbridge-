@@ -1,0 +1,80 @@
+<!-- File: Views/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MedBridge | Home</title>
+  <link rel="stylesheet" href="/public/css/style.css">
+
+  <style>
+    .home-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 40px;
+      flex-wrap: wrap;
+    }
+
+    .home-buttons a button {
+      padding: 15px 25px;
+      font-size: 16px;
+    }
+
+    h2 {
+      color: #004080;
+    }
+
+    #user-info {
+      margin-top: 20px;
+      font-weight: bold;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  
+  <header style="text-align: center;">
+    <h1>Welcome to MedBridge</h1>
+    <div id="user-info">Checking login status...</div>
+  </header>
+
+  <main style="text-align: center;">
+    <h2>Choose an option to continue</h2>
+    <div class="home-buttons" id="button-group">
+      
+    </div>
+  </main>
+
+  <footer style="text-align: center;">
+    <p>© 2025 MedBridge | Healthcare through Unity</p>
+  </footer>
+
+  <script>
+    const name = localStorage.getItem('name');
+    const email = localStorage.getItem('email');
+    const userId = localStorage.getItem('userId');
+
+    const userInfoDiv = document.getElementById('user-info');
+    const buttonGroup = document.getElementById('button-group');
+
+    if (userId && name && email) {
+      userInfoDiv.innerText = `👤 Logged in as: ${name} (${email})`;
+
+      buttonGroup.innerHTML = `
+        <a href="/dashboard"><button>🏠 Dashboard</button></a>
+        <a href="/logout"><button>🚪 Logout</button></a>
+        <a href="/admin"><button>🛠️ Admin Panel</button></a>
+        <a href="/about.html"><button>ℹ️ About Us</button></a>
+      `;
+    } else {
+      userInfoDiv.innerText = '👤 You are not logged in.';
+      buttonGroup.innerHTML = `
+        <a href="/login"><button>👤 User Login</button></a>
+        <a href="/login"><button>🏢 NGO Login</button></a>
+        <a href="/admin"><button>🛠️ Admin Panel</button></a>
+        <a href="/about.html"><button>ℹ️ About Us</button></a>
+      `;
+    }
+  </script>
+</body>
+</html>

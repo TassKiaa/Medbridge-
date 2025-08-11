@@ -1,0 +1,60 @@
+<!-- Views/rent.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Set Rental Price - MedBridge</title>
+  <link rel="stylesheet" href="/public/css/style.css">
+
+
+</head>
+<body>
+  <h2>Post Item for Rent</h2>
+  <div id="item-info"></div>
+
+  <form id="rent-form">
+    <input type="hidden" name="item_id">
+    <label>Rental Price (৳):</label><br>
+    <input name="rental_price" required><br><br>
+    <button type="submit">Post for Rent</button>
+  </form>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const itemId = urlParams.get('id');
+
+    fetch(`/api/items/${itemId}`)
+      .then(res => res.json())
+      .then(item => {
+        document.querySelector('input[name="item_id"]').value = item.id;
+        document.getElementById('item-info').innerHTML = `
+          <h3>${item.title}</h3>
+          <p>${item.description}</p>
+          <img src="${item.image_url}" width="150">
+        `;
+      });
+
+    document.getElementById('rent-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+
+      const payload = {
+        rental_price: this.rental_price.value
+      };
+
+      const res = await fetch(`/api/items/rent/${itemId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      const data = await res.json();
+      if (res.ok) {
+        alert('Item posted for rent!');
+        window.location.href = '/admin';
+      } else {
+        alert(data.message || 'Failed to post item');
+      }
+    });
+  </script>
+</body>
+</html>

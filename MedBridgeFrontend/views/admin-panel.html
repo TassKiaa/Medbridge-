@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin Panel | MedBridge</title>
+  <link rel="stylesheet" href="/public/css/style.css" />
+</head>
+<body>
+  <header>
+    <h1>Admin Dashboard</h1>
+  </header>
+
+  <div style="position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);">
+    <a href="/"><button>🏠 Home</button></a>
+  </div>
+
+  <main>
+    <h2>Pending User Approvals</h2>
+    <ul id="approval-list"></ul>
+
+    <h2>Pending Item Requests</h2>
+    <ul id="request-list">
+      Loading requests...
+    </ul>
+
+    <h2>Disaster Fund Status</h2>
+    <div id="fund-info">Loading fund info...</div>
+  </main>
+
+  <script>
+    async function loadRequests() {
+      try {
+        const res = await fetch('/api/requests');
+        if (!res.ok) throw new Error('Network response not ok');
+        const requests = await res.json();
+
+        const list = document.getElementById('request-list');
+        list.innerHTML = '';
+
+        requests
+          .filter(r => r.status === 'pending')
+          .forEach(r => {
+            const li = document.createElement('li');
+            li.innerHTML = `
+              <strong>Request ID:</strong> ${r.id} |
+              <strong>Item ID:</strong> ${r.item_id} |
+              <strong>User ID:</strong> ${r.requester_id}
+              <button onclick="updateRequest(${r.id}, 'approved')">Approve</button>
+              <button onclick="updateRequest(${r.id}, 'rejected')">Reject</button>
+            `;
+            list.appendChild(li);
+          });
+
+        if (list.innerHTML === '') {
+          list.innerHTML = 'No pending requests.';
+        }
+      } catch (err) {
+        console.error('Error loading requests:', err);
+        document.getElementById('request-list').innerHTML = 'Error loading requests.';
+      }
+    }
+
+    async function updateRequest(id, status) {
+      try {
+        const res = await fetch(`/api/requests/${id}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ status })
+        });
+
+        const data = await res.json();
+        alert(data.message);
+        loadRequests();
+      } catch (err) {
+        alert('Failed to update request.');
+      }
+    }
+
+    async function loadFund() {
+      try {
+        const res = await fetch('/api/funds');
+        if (!res.ok) throw new Error('Network response not ok');
+        const data = await res.json();
+
+        const total = data.reduce((sum, f) => sum + f.amount, 0);
+        document.getElementById('fund-info').innerText = `Total Collected: ৳${total}`;
+      } catch (err) {
+        document.getElementById('fund-info').innerText = 'Failed to load fund data.';
+      }
+    }
+
+    loadRequests();
+    loadFund();
+  </script>
+</body>
+</html>

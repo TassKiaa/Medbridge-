@@ -1,0 +1,118 @@
+<!-- Views/request.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Request Item - MedBridge</title>
+  <link rel="stylesheet" href="/public/css/style.css">
+
+  <style>
+    #total-price {
+      margin-top: 10px;
+      font-weight: bold;
+      color: #004080;
+    }
+  </style>
+</head>
+<body>
+  <h2>Request Item</h2>
+  <div id="item-details">Loading item info...</div>
+
+  <!-- Home Button -->
+  <div style="position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);">
+    <a href="/dashboard"><button>🏠 Home</button></a>
+  </div>
+
+  <form id="request-form" style="display:none;">
+    <label>Duration (days):</label><br>
+    <input type="number" name="duration" min="1" required><br><br>
+
+    <div id="total-price"></div>
+
+    <label>Remarks:</label><br>
+    <textarea name="remarks" rows="4" cols="30"></textarea><br><br>
+
+    <button type="submit">Submit Request</button>
+  </form>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const itemId = urlParams.get('item');
+    let rentalPrice = 0;
+    let isRental = false;
+
+    async function loadItemInfo() {
+      try {
+        const res = await fetch('/api/items');
+        const items = await res.json();
+        const item = items.find(i => i.id == itemId);
+
+        if (!item) {
+          document.getElementById('item-details').innerText = "Item not found.";
+          return;
+        }
+
+        rentalPrice = item.rental_price || 0;
+        isRental = item.is_rental;
+
+        document.getElementById('item-details').innerHTML = `
+          <h3>${item.title}</h3>
+          <p>${item.description}</p>
+          <p><strong>Type:</strong> ${item.type}</p>
+          <p><strong>Rental:</strong> ${item.is_rental ? 'Yes (৳' + rentalPrice + ' per 3 days)' : 'No'}</p>
+        `;
+
+        document.getElementById('request-form').style.display = 'block';
+      } catch (err) {
+        console.error('Error loading item:', err);
+      }
+    }
+
+    // Show total price dynamically
+    document.addEventListener('input', function (e) {
+      if (e.target.name === 'duration') {
+        const days = parseInt(e.target.value) || 0;
+        if (isRental && days > 0) {
+          const total = Math.ceil((rentalPrice / 3) * days);
+          document.getElementById('total-price').innerText = `Total Rental Price: ৳${total}`;
+        } else {
+          document.getElementById('total-price').innerText = '';
+        }
+      }
+    });
+
+    // Submit form
+    document.getElementById('request-form').addEventListener('submit', async function (e) {
+      e.preventDefault();
+
+      const formData = {
+        item_id: itemId,
+        requester_id: 1, 
+        duration: e.target.duration.value
+      };
+
+      try {
+        const res = await fetch('/api/requests', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(formData)
+        });
+
+        const data = await res.json();
+        
+        if (!res.ok) {
+          alert(data.message || 'Request failed.');
+          return;
+        }
+
+        alert(data.message || 'Request submitted!');
+        window.location.href = '/dashboard';
+      } catch (err) {
+        alert('Failed to submit request.');
+      }
+    });
+
+    loadItemInfo();
+  </script>
+</body>
+</html>

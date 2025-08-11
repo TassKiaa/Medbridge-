@@ -1,0 +1,54 @@
+<!-- Views/edit-item.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Edit Item | MedBridge</title>
+<link rel="stylesheet" href="/public/css/style.css">
+
+</head>
+<body>
+  <h2>Edit Your Item</h2>
+  <form id="edit-form">
+    <input type="text" name="title" required><br><br>
+    <textarea name="description" required></textarea><br><br>
+    <input type="number" name="rental_price"><br><br>
+    <button type="submit">Update</button>
+  </form>
+
+  <script>
+    const id = new URLSearchParams(window.location.search).get('id');
+
+    async function loadItem() {
+      const res = await fetch('/api/items/' + id);
+      const item = await res.json();
+
+      document.querySelector('[name="title"]').value = item.title;
+      document.querySelector('[name="description"]').value = item.description;
+      document.querySelector('[name="rental_price"]').value = item.rental_price;
+    }
+
+    document.getElementById('edit-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const form = e.target;
+      const data = {
+        title: form.title.value,
+        description: form.description.value,
+        rental_price: form.rental_price.value
+      };
+
+      const res = await fetch('/api/items/' + id, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+
+      const result = await res.json();
+      alert(result.message);
+      window.location.href = '/dashboard';
+    });
+
+    loadItem();
+  </script>
+</body>
+</html>

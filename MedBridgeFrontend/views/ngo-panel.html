@@ -1,0 +1,69 @@
+<!-- File: Views/ngo-panel.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>NGO Panel | MedBridge</title>
+   <link rel="stylesheet" href="/public/css/style.css">
+
+
+
+</head>
+<body>
+  <header>
+    <h1>NGO Panel</h1>
+    </header>
+<div style="position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);">
+  <a href="/"><button>🏠 Home</button></a>
+</div>
+  </header>
+
+  <main>
+    <h2>Request Medical Items</h2>
+    <form id="request-form">
+      <label>Item Needed:</label><br>
+      <input type="text" name="item" required><br><br>
+
+      <label>Quantity:</label><br>
+      <input type="number" name="quantity" required><br><br>
+
+      <label>Purpose/Remarks:</label><br>
+      <textarea name="remarks" rows="4" cols="40"></textarea><br><br>
+
+      <button type="submit">Submit Request</button>
+    </form>
+  </main>
+
+  <script>
+    document.getElementById('request-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+
+      const formData = {
+        item: e.target.item.value,
+        quantity: e.target.quantity.value,
+        remarks: e.target.remarks.value
+      };
+
+      try {
+        const res = await fetch('/api/requests/new', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(formData)
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+          alert(data.message || 'Request submitted successfully!');
+          e.target.reset(); // Clear form
+        } else {
+          alert(data.message || 'Failed to submit request.');
+        }
+
+      } catch (err) {
+        alert('Server error. Please try again.');
+      }
+    });
+  </script>
+</body>
+</html>
