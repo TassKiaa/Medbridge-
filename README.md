@@ -17,12 +17,12 @@ The main objective of **MedBridge** is to create a **trusted, user-friendly, and
 
 Features Implemented
 
-1.User Registration & Login** — Secure authentication system.
+1.User Registration & Login— Secure authentication system.
 2.Post a Product** — Option to donate or rent medical items.
-3.Request Medical Items** — Users and NGOs can submit item requests.
-4.Admin Panel** — Admin can approve or reject requests for better control.
+3.Request Medical Items — Users and NGOs can submit item requests.
+4.Admin Panel— Admin can approve or reject requests for better control.
 5.ER Diagram & Database-Driven Backend** — MySQL database design and integration.
-6.Responsive Frontend** — Built using HTML, CSS, and JavaScript.
+6.Responsive Frontend— Built using HTML, CSS, and JavaScript.
 
 
 Future Benefits
