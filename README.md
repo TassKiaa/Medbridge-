@@ -1,69 +1,77 @@
-MedBridge
-Member:
+# **MedBridge**
+**Member:**
 
-Taskia Khanam — 231-115-352
+* **Taskia Khanam** — *231-115-352*
 
-Introduction
+---
 
-MedBridge is a community-based platform designed to make medical equipment more accessible. It enables users to donate or rent medical items, helping connect individuals and NGOs with people in urgent need. The platform also provides an **admin panel** for effective resource management.
+##  Introduction
+
+MedBridge is a **community-based platform** designed to make medical equipment more accessible. It enables users to donate or rent medical items, helping connect **individuals and NGOs** with people in urgent need. The platform also provides an **admin panel** for effective resource management.
 This project aims to bridge the gap between medical item owners and seekers, ensuring that valuable resources are utilized rather than left unused.
 
+---
 
-
-Objective
+##  Objective
 
 The main objective of **MedBridge** is to create a **trusted, user-friendly, and efficient network** where medical resources can be **shared, rented, or donated** to help those in need. The platform ensures transparency, ease of communication, and efficient tracking of requests.
 
+---
 
-Features Implemented
+##  Features Implemented
 
-1.User Registration & Login— Secure authentication system.
-2.Post a Product** — Option to donate or rent medical items.
-3.Request Medical Items — Users and NGOs can submit item requests.
-4.Admin Panel— Admin can approve or reject requests for better control.
-5.ER Diagram & Database-Driven Backend** — MySQL database design and integration.
-6.Responsive Frontend— Built using HTML, CSS, and JavaScript.
+* **User Registration & Login** — Secure authentication system.
+* **Post a Product** — Option to donate or rent medical items.
+* **Request Medical Items** — Users and NGOs can submit item requests.
+* **Admin Panel** — Admin can approve or reject requests for better control.
+* **ER Diagram & Database-Driven Backend** — MySQL database design and integration.
+* **Responsive Frontend** — Built using HTML, CSS, and JavaScript.
 
+---
 
-Future Benefits
+##  Future Benefits
 
-1. Will help reduce **medical equipment waste** by promoting reuse.
-2. Acts as a **social service platform** connecting communities and NGOs.
-3.Can be expanded with features like **real-time chat**, **delivery tracking**, and **multi-language support**.
-4.Potential integration with **hospital networks** for faster emergency response.
+* Will help reduce **medical equipment waste** by promoting reuse.
+* Acts as a **social service platform** connecting communities and NGOs.
+* Can be expanded with features like **real-time chat**, **delivery tracking**, and **multi-language support**.
+* Potential integration with **hospital networks** for faster emergency response.
 
+---
 
+##  Project Structure
 
-Project Structure
+**Backend:** Node.js + Express + MySQL
+**Frontend:** HTML + CSS + JavaScript
+**Database:** MySQL
+**Tools Used:** draw\.io, GitHub
 
-Backend: Node.js + Express + MySQL
-Frontend:HTML + CSS + JavaScript
-Database: MySQL
-Tools Used: draw\.io, GitHub
+---
 
-
- ER Diagram
+##  ER Diagram
 
 [View ER Diagram](https://drive.google.com/file/d/1cuIEGCqGqtj1I7QVpB5epWXyvGvwebCw/view?usp=sharing)
 
+---
 
+##  Project Demo Video
 
-Project Demo Video
+https://youtu.be/HPSjfLYGfAw?si=YTF-WTAcByJhLDNU
 
-https://www.youtube.com/watch?si=YTF-WTAcByJhLDNU&v=HPSjfLYGfAw&feature=youtu.be
+---
 
+##  How to Run Locally
 
+### Backend Setup
 
-How to Run Locally
-
-Backend Setup
-
-bash
-`cd MedBridgeBackend
+```bash
+cd MedBridgeBackend
 npm install
 node server.js
-`
-Frontend
+```
+
+### Frontend
+
 Open `MedBridgeFrontend/Views/index.html` in your browser.
 
+---
 
