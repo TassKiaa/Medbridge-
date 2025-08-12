@@ -71,7 +71,7 @@ node server.js
 
 ### Frontend
 
-Open `MedBridgeFrontend/Views/index.html` in your browser.
+Open `MedBridgeFrontend/Views/index.html` 
 
 ---
 
