@@ -1,5 +1,5 @@
 # **MedBridge**
-**Member:**
+**Group Member:**
 
 * **Taskia Khanam** — *231-115-352*
 
